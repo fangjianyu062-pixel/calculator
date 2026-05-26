@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>计算器</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0e0e0f;
+    --surface: #1a1a1c;
+    --surface2: #242428;
+    --accent: #e8ff47;
+    --accent2: #ff6b35;
+    --text: #f0f0f0;
+    --muted: #666;
+    --radius: 16px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Syne', sans-serif;
+    overflow: hidden;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    top: -30%;
+    left: -20%;
+    width: 60%;
+    height: 60%;
+    background: radial-gradient(circle, rgba(232,255,71,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  body::after {
+    content: '';
+    position: fixed;
+    bottom: -20%;
+    right: -10%;
+    width: 50%;
+    height: 50%;
+    background: radial-gradient(circle, rgba(255,107,53,0.05) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .calculator {
+    background: var(--surface);
+    border-radius: 28px;
+    padding: 28px;
+    width: 340px;
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.06), 0 40px 80px rgba(0,0,0,0.6);
+    animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(30px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  .label { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; color: var(--muted); text-transform: uppercase; margin-bottom: 20px; }
+  .display {
+    background: var(--bg);
+    border-radius: var(--radius);
+    padding: 20px 22px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(255,255,255,0.05);
+    min-height: 96px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-end;
+    gap: 6px;
+    overflow: hidden;
+  }
+  .expression { font-family: 'Space Mono', monospace; font-size: 13px; color: var(--muted); min-height: 18px; word-break: break-all; text-align: right; }
+  .result { font-family: 'Space Mono', monospace; font-size: 36px; font-weight: 700; color: var(--text); line-height: 1; word-break: break-all; text-align: right; }
+  .result.small { font-size: 26px; }
+  .result.tiny  { font-size: 20px; }
+  .buttons { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  button {
+    border: none;
+    border-radius: 14px;
+    height: 64px;
+    font-family: 'Syne', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.08s, opacity 0.08s;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  button:active { transform: scale(0.93); opacity: 0.85; }
+  .btn-num { background: var(--surface2); color: var(--text); box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
+  .btn-zero { grid-column: span 2; }
+  .btn-op { background: rgba(232,255,71,0.1); color: var(--accent); border: 1px solid rgba(232,255,71,0.15); }
+  .btn-eq { background: var(--accent); color: #0e0e0f; box-shadow: 0 4px 20px rgba(232,255,71,0.3); }
+  .btn-clear { background: rgba(255,107,53,0.12); color: var(--accent2); border: 1px solid rgba(255,107,53,0.2); font-size: 14px; }
+  .btn-dot { background: var(--surface2); color: var(--text); }
+  @keyframes flash {
+    0%   { background: rgba(232,255,71,0.15); }
+    100% { background: var(--bg); }
+  }
+  .display.flash { animation: flash 0.3s ease-out; }
+</style>
+</head>
+<body>
+<div class="calculator">
+  <div class="label">Calculator</div>
+  <div class="display" id="display">
+    <div class="expression" id="expression"></div>
+    <div class="result" id="result">0</div>
+  </div>
+  <div class="buttons">
+    <button class="btn-clear" onclick="clearAll()">AC</button>
+    <button class="btn-clear" onclick="toggleSign()">+/−</button>
+    <button class="btn-clear" onclick="percentage()">%</button>
+    <button class="btn-op"    onclick="inputOp('/')">÷</button>
+    <button class="btn-num" onclick="inputNum('7')">7</button>
+    <button class="btn-num" onclick="inputNum('8')">8</button>
+    <button class="btn-num" onclick="inputNum('9')">9</button>
+    <button class="btn-op"  onclick="inputOp('*')">×</button>
+    <button class="btn-num" onclick="inputNum('4')">4</button>
+    <button class="btn-num" onclick="inputNum('5')">5</button>
+    <button class="btn-num" onclick="inputNum('6')">6</button>
+    <button class="btn-op"  onclick="inputOp('-')">−</button>
+    <button class="btn-num" onclick="inputNum('1')">1</button>
+    <button class="btn-num" onclick="inputNum('2')">2</button>
+    <button class="btn-num" onclick="inputNum('3')">3</button>
+    <button class="btn-op"  onclick="inputOp('+')">+</button>
+    <button class="btn-num btn-zero" onclick="inputNum('0')">0</button>
+    <button class="btn-dot btn-num"  onclick="inputDot()">.</button>
+    <button class="btn-eq"           onclick="calculate()">=</button>
+  </div>
+</div>
+<script>
+  let current='0', expression='', operator=null, prev=null, justCalc=false;
+  const resultEl=document.getElementById('result');
+  const expressionEl=document.getElementById('expression');
+  const displayEl=document.getElementById('display');
+  function updateDisplay(){
+    resultEl.textContent=current;
+    const len=current.length;
+    resultEl.className='result '+(len>12?'tiny':len>8?'small':'');
+    expressionEl.textContent=expression;
+  }
+  function inputNum(n){
+    if(justCalc){current=n;expression='';justCalc=false;}
+    else current=current==='0'?n:(current.length<15?current+n:current);
+    updateDisplay();
+  }
+  function inputDot(){
+    if(justCalc){current='0.';expression='';justCalc=false;}
+    else if(!current.includes('.'))current+='.';
+    updateDisplay();
+  }
+  function inputOp(op){
+    justCalc=false;
+    if(operator){prev=operate(parseFloat(prev),parseFloat(current),operator);current=String(fmt(prev));}
+    else{prev=parseFloat(current);}
+    operator=op;
+    const sym={'+':'+','-':'−','*':'×','/':'÷'}[op];
+    expression=fmt(prev)+' '+sym;
+    current='0';
+    updateDisplay();
+  }
+  function calculate(){
+    if(!operator||prev===null)return;
+    const a=parseFloat(prev),b=parseFloat(current);
+    const sym={'+':'+','-':'−','*':'×','/':'÷'}[operator];
+    expression=fmt(a)+' '+sym+' '+fmt(b)+' =';
+    const res=operate(a,b,operator);
+    current=String(fmt(res));
+    operator=null;prev=null;justCalc=true;
+    displayEl.classList.remove('flash');
+    void displayEl.offsetWidth;
+    displayEl.classList.add('flash');
+    updateDisplay();
+  }
+  function operate(a,b,op){
+    如果(操作==='+')返回 一个+b;
+    如果(操作==='-')返回 一个-b;
+    如果(操作==='*')返回 一个*b;
+    如果(操作==='/')返回 b===0?Nan:一个/b;
+  }
+  功能 FMT(n){
+    如果(isNaN(n))返回 '错误';
+    如果(!isfinite(n))返回 '∞';
+    返回 parseFloat(n.toPrecision(12));
+  }
+  功能 clearAll(){当前='0';表达='';经营者=null;上一个=null;justCalc=false;updateDisplay();}
+功能toggleSign(){当前=字符串(parseFloat(当前)*-1)；updateDisplay()；}功能 toggleSign(){当前=线(parseFloat(当前)*-1);updateDisplay();}
+  功能 百分比(){当前=线(parseFloat(当前)/100);updateDisplay();}
+  文件.addEventListener('按下键',e=>{
+    如果('0123456789'.包括(e.钥匙))inputNum(e.钥匙);
+    其他 如果(e.钥匙==='.')inputDot();
+    其他 如果(e.钥匙==='+')inputOp('+');
+    其他 如果(e.钥匙==='-')inputOp('-');
+    其他 如果(e.钥匙==='*')inputOp('*');
+    其他 如果(e.钥匙==='/'){e.preventDefault();inputOp('/');}
+    其他 如果(e.钥匙==='输入'||e.钥匙==='=')计算();
+    其他 如果(e.钥匙==='Backspace'){当前=当前.长度>1?当前.slice(0,-1):'0';updateDisplay();}
+    其他 如果(e.钥匙==='Escape')clearAll();
+  });
+</剧本>
+</身体>
+</超文本标记语言>
