@@ -1,207 +1,158 @@
-<!DOCTYPE html>
-<html lang="zh">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>计算器</title>
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg: #0e0e0f;
-    --surface: #1a1a1c;
-    --surface2: #242428;
-    --accent: #e8ff47;
-    --accent2: #ff6b35;
-    --text: #f0f0f0;
-    --muted: #666;
-    --radius: 16px;
-  }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    background: var(--bg);
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Syne', sans-serif;
-    overflow: hidden;
-  }
-  body::before {
-    content: '';
-    position: fixed;
-    top: -30%;
-    left: -20%;
-    width: 60%;
-    height: 60%;
-    background: radial-gradient(circle, rgba(232,255,71,0.06) 0%, transparent 70%);
-    pointer-events: none;
-  }
-  body::after {
-    content: '';
-    position: fixed;
-    bottom: -20%;
-    right: -10%;
-    width: 50%;
-    height: 50%;
-    background: radial-gradient(circle, rgba(255,107,53,0.05) 0%, transparent 70%);
-    pointer-events: none;
-  }
-  .calculator {
-    background: var(--surface);
-    border-radius: 28px;
-    padding: 28px;
-    width: 340px;
-    box-shadow: 0 0 0 1px rgba(255,255,255,0.06), 0 40px 80px rgba(0,0,0,0.6);
-    animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
-  }
-  @keyframes slideUp {
-    from { opacity: 0; transform: translateY(30px) scale(0.97); }
-    to   { opacity: 1; transform: translateY(0) scale(1); }
-  }
-  .label { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; color: var(--muted); text-transform: uppercase; margin-bottom: 20px; }
-  .display {
-    background: var(--bg);
-    border-radius: var(--radius);
-    padding: 20px 22px;
-    margin-bottom: 20px;
-    border: 1px solid rgba(255,255,255,0.05);
-    min-height: 96px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: flex-end;
-    gap: 6px;
-    overflow: hidden;
-  }
-  .expression { font-family: 'Space Mono', monospace; font-size: 13px; color: var(--muted); min-height: 18px; word-break: break-all; text-align: right; }
-  .result { font-family: 'Space Mono', monospace; font-size: 36px; font-weight: 700; color: var(--text); line-height: 1; word-break: break-all; text-align: right; }
-  .result.small { font-size: 26px; }
-  .result.tiny  { font-size: 20px; }
-  .buttons { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
-  button {
-    border: none;
-    border-radius: 14px;
-    height: 64px;
-    font-family: 'Syne', sans-serif;
-    font-size: 18px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: transform 0.08s, opacity 0.08s;
-    outline: none;
-    -webkit-tap-highlight-color: transparent;
-  }
-  button:active { transform: scale(0.93); opacity: 0.85; }
-  .btn-num { background: var(--surface2); color: var(--text); box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
-  .btn-zero { grid-column: span 2; }
-  .btn-op { background: rgba(232,255,71,0.1); color: var(--accent); border: 1px solid rgba(232,255,71,0.15); }
-  .btn-eq { background: var(--accent); color: #0e0e0f; box-shadow: 0 4px 20px rgba(232,255,71,0.3); }
-  .btn-clear { background: rgba(255,107,53,0.12); color: var(--accent2); border: 1px solid rgba(255,107,53,0.2); font-size: 14px; }
-  .btn-dot { background: var(--surface2); color: var(--text); }
-  @keyframes flash {
-    0%   { background: rgba(232,255,71,0.15); }
-    100% { background: var(--bg); }
-  }
-  .display.flash { animation: flash 0.3s ease-out; }
-</style>
-</head>
-<body>
-<div class="calculator">
-  <div class="label">Calculator</div>
-  <div class="display" id="display">
-    <div class="expression" id="expression"></div>
-    <div class="result" id="result">0</div>
+！doctype超文本标记语言！doctype超文本标记语言>
+<超文本标记语言 朗="zh">
+<头>
+<元 字符集="UTF-8">
+<元 姓名="视口" 内容="宽度=设备宽度，初始比例=1.0">
+<标题>计算器</标题>
+<风格>
+*{边缘：0；填充：0；箱体尺寸：边框框；}
+身体 {
+背景：#0e0e0f；
+最小高度：100vh；
+显示：弯曲；
+  对齐项目: 中心;
+justify-content：中心；
+  字体系列: 无衬线;
+}
+.计算器 {
+背景：#1a1a1c；
+边界半径：28PX；
+填料：28PX；
+宽度：320px；
+}
+.显示 {
+背景：#0e0e0f；
+边界半径：16px；
+填料：20px；
+底边距：20px；
+最小高度：90px；
+显示：弯曲；
+弯曲方向：立柱；
+justify-content:flex-end；
+对齐项目：弯曲端；
+}
+#表达{font-size:13PX；color：#666；最小高度：18px；}
+#result{font-size:36PX；font-weight:700；color：#f0f0f0；}
+.buttons{
+显示：网格；
+网格模板列：重复(4，1 Fr)；
+间隙：10px；
+}
+按钮 {
+边境：没有一个；
+边界半径：14px；
+高度：64px；
+字体大小：18px；
+font-weight:700；
+光标：指针；
+}
+.btn-num{背景：#242428；颜色：#f0f0f0；}
+.btn-零{网格列：跨度2；}
+.btn-op{背景：#2a2a1a；颜色：#e8ff47；}
+.btn-eq{背景：#e8ff47；color：#0e0e0f；}
+.btn-fn{背景：#2a1a10；颜色：#ff6b35；font-size:14px；}
+</风格>
+</头>
+<身体>
+<div 班级="计算器">
+  <div 班级="显示">
+    <div 身份标识="表达式"></div>
+    <div 身份标识="结果">0</div>
   </div>
-  <div class="buttons">
-    <button class="btn-clear" onclick="clearAll()">AC</button>
-    <button class="btn-clear" onclick="toggleSign()">+/−</button>
-    <button class="btn-clear" onclick="percentage()">%</button>
-    <button class="btn-op"    onclick="inputOp('/')">÷</button>
-    <button class="btn-num" onclick="inputNum('7')">7</button>
-    <button class="btn-num" onclick="inputNum('8')">8</button>
-    <button class="btn-num" onclick="inputNum('9')">9</button>
-    <button class="btn-op"  onclick="inputOp('*')">×</button>
-    <button class="btn-num" onclick="inputNum('4')">4</button>
-    <button class="btn-num" onclick="inputNum('5')">5</button>
-    <button class="btn-num" onclick="inputNum('6')">6</button>
-    <button class="btn-op"  onclick="inputOp('-')">−</button>
-    <button class="btn-num" onclick="inputNum('1')">1</button>
-    <button class="btn-num" onclick="inputNum('2')">2</button>
-    <button class="btn-num" onclick="inputNum('3')">3</button>
-    <button class="btn-op"  onclick="inputOp('+')">+</button>
-    <button class="btn-num btn-zero" onclick="inputNum('0')">0</button>
-    <button class="btn-dot btn-num"  onclick="inputDot()">.</button>
-    <button class="btn-eq"           onclick="calculate()">=</button>
+  <div 班级="按钮">
+    <按钮 班级="btn-fn" 身份标识="ac">交流电</按钮>
+    <按钮 班级="btn-fn" 身份标识="签名">+/−</按钮>
+    <按钮 班级="btn-fn" 身份标识="pct">%</按钮>
+    <按钮 班级="btn-op" 身份标识="div">÷</按钮>
+    <按钮 班级="btn-num" 身份标识="n7">7</按钮>
+    <按钮 班级="btn-num" 身份标识="n8">8</按钮>
+    <按钮 班级="btn-num" 身份标识="n9">9</按钮>
+    <按钮 班级="btn-op" 身份标识="mul">×</按钮>
+    <按钮 班级="btn-num" 身份标识="n4">4</按钮>
+    <按钮 班级="btn-num" 身份标识="n5">5</按钮>
+    <按钮 班级="btn-num" 身份标识="n6">6</按钮>
+    <按钮 班级="btn-op" 身份标识="sub">−</按钮>
+    <按钮 班级="btn-num" 身份标识="n1">1</按钮>
+    <按钮 班级="btn-num" 身份标识="n2">2</按钮>
+    <按钮 班级="btn-num" 身份标识="n3">3</按钮>
+    <按钮 班级="btn-op" 身份标识="添加">+</按钮>
+    <按钮 班级="btn-num btn-zero" 身份标识="n0">0</按钮>
+    <按钮 班级="btn-num" 身份标识="点">.</按钮>
+    <按钮 班级="btn-eq" 身份标识="eq">=</按钮>
   </div>
 </div>
-<script>
-  let current='0', expression='', operator=null, prev=null, justCalc=false;
-  const resultEl=document.getElementById('result');
-  const expressionEl=document.getElementById('expression');
-  const displayEl=document.getElementById('display');
-  function updateDisplay(){
-    resultEl.textContent=current;
-    const len=current.length;
-    resultEl.className='result '+(len>12?'tiny':len>8?'small':'');
-    expressionEl.textContent=expression;
-  }
-  function inputNum(n){
-    if(justCalc){current=n;expression='';justCalc=false;}
-    else current=current==='0'?n:(current.length<15?current+n:current);
-    updateDisplay();
-  }
-  function inputDot(){
-    if(justCalc){current='0.';expression='';justCalc=false;}
-    else if(!current.includes('.'))current+='.';
-    updateDisplay();
-  }
-  function inputOp(op){
-    justCalc=false;
-    if(operator){prev=operate(parseFloat(prev),parseFloat(current),operator);current=String(fmt(prev));}
-    else{prev=parseFloat(current);}
-    operator=op;
-    const sym={'+':'+','-':'−','*':'×','/':'÷'}[op];
-    expression=fmt(prev)+' '+sym;
-    current='0';
-    updateDisplay();
-  }
-  function calculate(){
-    if(!operator||prev===null)return;
-    const a=parseFloat(prev),b=parseFloat(current);
-    const sym={'+':'+','-':'−','*':'×','/':'÷'}[operator];
-    expression=fmt(a)+' '+sym+' '+fmt(b)+' =';
-    const res=operate(a,b,operator);
-    current=String(fmt(res));
-    operator=null;prev=null;justCalc=true;
-    displayEl.classList.remove('flash');
-    void displayEl.offsetWidth;
-    displayEl.classList.add('flash');
-    updateDisplay();
-  }
-  function operate(a,b,op){
-    如果(操作==='+')返回 一个+b;
-    如果(操作==='-')返回 一个-b;
-    如果(操作==='*')返回 一个*b;
-    如果(操作==='/')返回 b===0?Nan:一个/b;
-  }
-  功能 FMT(n){
-    如果(isNaN(n))返回 '错误';
-    如果(!isfinite(n))返回 '∞';
-    返回 parseFloat(n.toPrecision(12));
-  }
-  功能 clearAll(){当前='0';表达='';经营者=null;上一个=null;justCalc=false;updateDisplay();}
-功能toggleSign(){当前=字符串(parseFloat(当前)*-1)；updateDisplay()；}功能 toggleSign(){当前=线(parseFloat(当前)*-1);updateDisplay();}
-  功能 百分比(){当前=线(parseFloat(当前)/100);updateDisplay();}
-  文件.addEventListener('按下键',e=>{
-    如果('0123456789'.包括(e.钥匙))inputNum(e.钥匙);
-    其他 如果(e.钥匙==='.')inputDot();
-    其他 如果(e.钥匙==='+')inputOp('+');
-    其他 如果(e.钥匙==='-')inputOp('-');
-    其他 如果(e.钥匙==='*')inputOp('*');
-    其他 如果(e.钥匙==='/'){e.preventDefault();inputOp('/');}
-    其他 如果(e.钥匙==='输入'||e.钥匙==='=')计算();
-    其他 如果(e.钥匙==='Backspace'){当前=当前.长度>1?当前.slice(0,-1):'0';updateDisplay();}
-    其他 如果(e.钥匙==='Escape')clearAll();
-  });
+<脚本>
+var cur='0'，expr="，操作=null，上一个=null，已完成=假的；
+
+功能 显示() {
+文件.getElementById('结果').textContent=cur；
+文件.getElementById('表达式').textContent=expr；
+}
+
+功能NUM(n){
+如果(已完成){cur=n；ex公关="；已完成=假的；}
+其他{cur=cur====‘0’？n:cur+n；}
+显示();
+}
+
+功能dot(){
+如果(已完成){cur='0.'；已完成=假的；}
+else如果(cur.indexOf('.')===-1){cur+='.'；}
+显示();
+}
+
+功能操作(一个，B，o){
+如果(o==='+')返回一个+b；
+如果(o==='-')返回一个-b；
+如果(o==='*')返回一个*b；
+如果(o==="/")返回b===0？Nan：一个/b；
+}
+
+功能SETOP(o){
+var Sym={'+':'+','-':'−','*':'×','/':'÷'}[o];
+如果 (操作 && ! 已完成) {
+上一个=操作(parseFloat(上一个)，parseFloat(cur)，操作)；
+cur=线(上一个)；
+} 其他 {
+    上一个=parseFloat(cur);
+}
+操作=o；
+  expr=上一个+' '+Sym;
+cur=“0”；
+  已完成=假的;
+显示();
+}
+
+功能calc(){
+如果(！操作||上一个===null)返回；
+var一个=parseFloat(上一个)，B=parseFloat(cur)；
+var Sym={'+':'+','-':'−','*':'×','/':'÷'}[操作]；
+var res=操作(一个，b，操作)；
+expr=一个+”+Sym+”+b+'='；
+cur=isNaN(res)？'错误'：行(parseFloat(res.toPrecision(12)))；
+操作=null；上一个=无效的；已完成=正确；
+如果(o==='-')返回一个-b；
+}
+
+文件.getElementById('ac')。onclick=功能(){cur='0'；ex公关="；操作=null；上一个=null；已完成=false；显示()；}；
+文件.getElementById('签名').onClick=功能(){cur=线(parseFloat(c你的)*-1)；显示()；}；
+文件getElementById('pct')。onclick=功能(){cur=线(parseFloat(c你的)/100)；显示()；}；
+文件.getElementById('div').onclick=功能(){SETOP('/')；}；
+文件.getElementById('mul')。onclick=功能(){SETOP('*')；}；
+文件.getElementById('Sub')。onclick=功能(){SETOP('-')；}；
+文件.getElementById('添加').onClick=功能(){SETOP('+')；}；
+文件.getElementById('eq').onclick=calc；
+文件.getElementById('点').onClick=点；
+文件.getElementById('n0')。onclick=功能(){NUM("0")；}；功能(){NUM("0")；}；
+文件.getElementById('n1')。onclick=功能(){NUM('1')；}；
+文件.getElementById('n2')。onclick=功能(){NUM('2')；}；
+文件.getElementById('n3')。onclick=功能(){NUM('3')；}；
+文件.getElementById('n4')。onclick=功能(){NUM('4')；}；
+文件.getElementById('n5')。onclick=功能(){NUM('5')；}；
+文件.getElementById('n6')。onclick=功能(){NUM('6')；}；
+文件.getElementById('n7')。onclick=功能(){NUM('7')；}；
+文件.getElementById('n8')。onclick=功能(){NUM('8')；}；
+文件.getElementById('n9')。onclick=功能(){NUM('9')；}；
 </剧本>
 </身体>
-</超文本标记语言>
+</超文本标记语言>超文本标记语言>超文本标记语言>超文本标记语言>超文本标记语言>超文本标记语言>超文本标记语言>超文本标记语言>超文本标记语言>超文本标记语言>超文本标记语言>超文本标记语言>超文本标记语言>超文本标记语言>超文本标记语言>超文本标记语言>
